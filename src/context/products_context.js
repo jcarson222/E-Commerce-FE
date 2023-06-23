@@ -3,8 +3,6 @@ import { useContext, useEffect, useReducer, createContext } from "react";
 import reducer from "../reducers/products_reducer";
 import { products_url as url } from "../utils/constants";
 import {
-  SIDEBAR_OPEN,
-  SIDEBAR_CLOSE,
   GET_PRODUCTS_BEGIN,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_ERROR,
@@ -13,23 +11,24 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from "../actions";
 
-const initialState = { isSidebarOpen: false };
+const initialState = {};
 
 const ProductsContext = createContext();
 
 export const ProductsProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const openSidebar = () => {
-    dispatch({ type: SIDEBAR_OPEN });
+  const fetchProducts = async (url) => {
+    const response = await axios.get(url);
+    console.log(response);
   };
 
-  const closeSidebar = () => {
-    dispatch({ type: SIDEBAR_CLOSE });
-  };
+  useEffect(() => {
+    fetchProducts(url);
+  }, []);
 
   return (
-    <ProductsContext.Provider value={{ ...state, openSidebar, closeSidebar }}>
+    <ProductsContext.Provider value="some value">
       {children}
     </ProductsContext.Provider>
   );
