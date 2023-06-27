@@ -74,6 +74,16 @@ const filter_reducer = (state, action) => {
     return { ...state, filtered_products: tempProducts };
   }
 
+  if (action.type === UPDATE_FILTERS) {
+    const { name, value } = action.payload;
+    // Dynamic object keys ([name]) allows you to update the value of said key (name) dynamically. In this case, whatever the value of 'value' is, we want also to be the value of 'name'.
+    return { ...state, filters: { ...state.filters, [name]: value } };
+  }
+
+  if (action.type === FILTER_PRODUCTS) {
+    return { ...state };
+  }
+
   throw new Error(`No Matching "${action.type}" - action type`);
 };
 
