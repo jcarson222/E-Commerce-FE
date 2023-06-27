@@ -76,7 +76,7 @@ const filter_reducer = (state, action) => {
 
   if (action.type === UPDATE_FILTERS) {
     const { name, value } = action.payload;
-    // Dynamic object keys ([name]) allows you to update the value of said key (name) dynamically. In this case, whatever the value of 'value' is, we want also to be the value of 'name'. In other words, the value of the 'name' key (which is = "text") is set to the value of the 'value' key (whatever is in the search bar).
+    // Dynamic object keys ([name]) allows you to update the value of said key (name) dynamically. In this case, whatever the value of 'value' is, we want also to be the value of 'name'. In other words, the value of the 'name' key (which is = the element's name property value) is set to the value of the 'value' key (whatever is in the search bar or whatever filtering method).
     return { ...state, filters: { ...state.filters, [name]: value } };
   }
 
