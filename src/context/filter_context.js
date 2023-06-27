@@ -67,8 +67,14 @@ export const FilterProvider = ({ children }) => {
 
   // UPDATE FILTERS
   const updateFilters = (e) => {
+    // Need the 'name' target value with filter.
     let name = e.target.name;
     let value = e.target.value;
+
+    // if (name === 'category') {
+    //   value = e.target.textContent
+    // }
+
     dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
   };
 
