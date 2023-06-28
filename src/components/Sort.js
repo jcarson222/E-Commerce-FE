@@ -31,7 +31,7 @@ const Sort = () => {
       </div>
       <p>{products.length} products found</p>
       <hr />
-      <from>
+      <form>
         <label htmlFor="sort">sort by</label>
         <select
           name="sort"
@@ -45,7 +45,7 @@ const Sort = () => {
           <option value="name-a">name (a-z)</option>
           <option value="name-z">name (z-a)</option>
         </select>
-      </from>
+      </form>
     </Wrapper>
   );
 };

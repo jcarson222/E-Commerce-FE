@@ -11,10 +11,18 @@ import {
 
 const filter_reducer = (state, action) => {
   if (action.type === LOAD_PRODUCTS) {
+    let maxPrice = action.payload.map((product) => product.price);
+    maxPrice = Math.max(...maxPrice);
+
     return {
       ...state,
       all_products: [...action.payload],
       filtered_products: [...action.payload],
+      filters: {
+        ...state.filters,
+        price: maxPrice,
+        max_price: maxPrice,
+      },
     };
   }
 
@@ -36,6 +44,96 @@ const filter_reducer = (state, action) => {
     return {
       ...state,
       sort: action.payload,
+    };
+  }
+
+  if (action.type === SORT_PRODUCTS) {
+    const { sort, filtered_products } = state;
+    let tempProducts = [...filtered_products];
+
+    if (sort === "price-lowest") {
+      tempProducts.sort((a, b) => a.price - b.price);
+    }
+
+    if (sort === "price-highest") {
+      tempProducts.sort((a, b) => b.price - a.price);
+    }
+
+    if (sort === "name-a") {
+      tempProducts.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+    }
+
+    if (sort === "name-z") {
+      tempProducts.sort((a, b) => {
+        return b.name.localeCompare(a.name);
+      });
+    }
+
+    return { ...state, filtered_products: tempProducts };
+  }
+
+  if (action.type === UPDATE_FILTERS) {
+    const { name, value } = action.payload;
+    // Dynamic object keys ([name]) allows you to update the value of said key (name) dynamically. In this case, whatever the value of 'value' is, we want also to be the value of 'name'. In other words, the value of the 'name' key (which is = the element's name property value) is set to the value of the 'value' key (whatever is in the search bar or whatever filtering method).
+    return { ...state, filters: { ...state.filters, [name]: value } };
+  }
+
+  if (action.type === FILTER_PRODUCTS) {
+    const { all_products } = state;
+    const { text, category, company, color, price, shipping } = state.filters;
+    let tempProducts = [...all_products];
+
+    // filter
+    if (text) {
+      tempProducts = tempProducts.filter((product) => {
+        return product.name.toLowerCase().includes(text);
+      });
+    }
+
+    if (category !== "all") {
+      tempProducts = tempProducts.filter((product) => {
+        return product.category === category;
+      });
+    }
+
+    if (company !== "all") {
+      tempProducts = tempProducts.filter((product) => {
+        return product.company === company;
+      });
+    }
+
+    if (color !== "all") {
+      tempProducts = tempProducts.filter((product) => {
+        return product.colors.find((c) => c === color);
+      });
+    }
+
+    // filter by price
+    tempProducts = tempProducts.filter((product) => product.price <= price);
+
+    if (shipping) {
+      tempProducts = tempProducts.filter((product) => {
+        return product.shipping === true;
+      });
+    }
+
+    return { ...state, filtered_products: tempProducts };
+  }
+
+  if (action.type === CLEAR_FILTERS) {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        text: "",
+        company: "all",
+        category: "all",
+        color: "all",
+        price: state.filters.max_price,
+        shipping: false,
+      },
     };
   }
 
