@@ -49,6 +49,7 @@ export const CartProvider = ({ children }) => {
   // CLEAR CART
   const clearCart = () => {};
 
+  // STORE CART ITEMS IN LOCAL STORAGE
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(state.cart));
   }, [state.cart]);
