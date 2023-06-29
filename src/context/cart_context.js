@@ -8,8 +8,17 @@ import {
   COUNT_CART_TOTALS,
 } from "../actions";
 
+const getLocalStorage = () => {
+  let cart = localStorage.getItem("cart");
+  if (cart) {
+    return JSON.parse(localStorage.getItem("cart"));
+  } else {
+    return [];
+  }
+};
+
 const initialState = {
-  cart: [],
+  cart: getLocalStorage(),
   total_items: 0,
   total_amount: 0,
   shipping_fee: 534,
@@ -33,8 +42,31 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  // REMOVE ITEM
+  const removeItem = (id) => {
+    dispatch({ type: REMOVE_CART_ITEM, payload: id });
+  };
+  // TOGGLE AMOUNT
+  const toggleAmount = (id, value) => {
+    dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } });
+  };
+
+  // CLEAR CART
+  const clearCart = () => {
+    dispatch({ type: CLEAR_CART });
+  };
+
+  // STORE CART ITEMS IN LOCAL STORAGE
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(state.cart));
+
+    dispatch({ type: COUNT_CART_TOTALS });
+  }, [state.cart]);
+
   return (
-    <CartContext.Provider value={{ ...state, addToCart }}>
+    <CartContext.Provider
+      value={{ ...state, addToCart, removeItem, toggleAmount, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );
