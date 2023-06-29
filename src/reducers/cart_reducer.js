@@ -7,7 +7,7 @@ import {
 } from "../actions";
 
 const cart_reducer = (state, action) => {
-  /////// ADD TO CART ////////
+  // ADD TO CART
   if (action.type === ADD_TO_CART) {
     const { id, color, amount, product } = action.payload;
 
@@ -44,7 +44,18 @@ const cart_reducer = (state, action) => {
       return { ...state, cart: [...state.cart, newItem] };
     }
   }
-  /////// END ADD TO CART ////////
+
+  // REMOVE ITEM
+  if (action.type === REMOVE_CART_ITEM) {
+    const tempCart = state.cart.filter((item) => item.id !== action.payload);
+
+    return { ...state, cart: tempCart };
+  }
+
+  // CLEAR ITEMS
+  if (action.type === CLEAR_CART) {
+    return { ...state, cart: [] };
+  }
 
   throw new Error(`No Matching "${action.type}" - action type`);
 };

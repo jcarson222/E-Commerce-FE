@@ -43,11 +43,15 @@ export const CartProvider = ({ children }) => {
   };
 
   // REMOVE ITEM
-  const removeItem = (id) => {};
+  const removeItem = (id) => {
+    dispatch({ type: REMOVE_CART_ITEM, payload: id });
+  };
   // TOGGLE AMOUNT
   const toggleAmount = (id, value) => {};
   // CLEAR CART
-  const clearCart = () => {};
+  const clearCart = () => {
+    dispatch({ type: CLEAR_CART });
+  };
 
   // STORE CART ITEMS IN LOCAL STORAGE
   useEffect(() => {
