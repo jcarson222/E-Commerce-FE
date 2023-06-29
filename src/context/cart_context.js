@@ -59,6 +59,8 @@ export const CartProvider = ({ children }) => {
   // STORE CART ITEMS IN LOCAL STORAGE
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(state.cart));
+
+    dispatch({ type: COUNT_CART_TOTALS });
   }, [state.cart]);
 
   return (
