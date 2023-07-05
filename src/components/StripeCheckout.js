@@ -19,7 +19,7 @@ const CheckoutForm = () => {
   const { cart, total_amount, shipping_fee, clearCart } = useCartContext();
   const { myUser } = useUserContext();
   const navigate = useNavigate();
-
+  // console.log(promise);
   // STRIPE
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -289,3 +289,17 @@ const Wrapper = styled.section`
 `;
 
 export default StripeCheckout;
+
+// TEST CARDS
+
+// Success
+// 4242 4242 4242 4242 --> Succeeds and immediately processes the payment.
+
+// Declined
+// 4000000000000002 --> Generic decline.
+
+// Errors
+// for testing errors, invalid_expiry_month: Use an invalid month, such as 13
+// invalid_expiry_year: Use a year up to 50 years in the past, such as 95
+// invalid_cvc: Use a two-digit number, such as 99
+// incorrect_number: Use a card number that fails the Luhn check, such as 4242424242424241
