@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // the useParams function gives us the id from the product
 import { useProductsContext } from "../context/products_context";
 import { single_product_url as url } from "../utils/constants";
