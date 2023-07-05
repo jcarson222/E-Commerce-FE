@@ -20,7 +20,6 @@ const CheckoutForm = () => {
   const { myUser } = useUserContext();
   const navigate = useNavigate();
 
-  // console.log(promise)
   // STRIPE
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
