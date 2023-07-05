@@ -19,7 +19,7 @@ const CheckoutForm = () => {
   const { cart, total_amount, shipping_fee, clearCart } = useCartContext();
   const { myUser } = useUserContext();
   const navigate = useNavigate();
-  // console.log(promise);
+
   // STRIPE
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -35,10 +35,10 @@ const CheckoutForm = () => {
         "/.netlify/functions/create-payment-intent",
         JSON.stringify({ cart, shipping_fee, total_amount })
       );
-
+      // console.log(data);
       setClientSecret(data.clientSecret);
     } catch (error) {
-      // console.log(error.response)
+      console.log(error.response);
     }
   };
 
@@ -88,7 +88,7 @@ const CheckoutForm = () => {
       setTimeout(() => {
         clearCart();
         navigate("/");
-      }, 1000);
+      }, 5000);
     }
   };
 
